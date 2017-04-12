@@ -11,11 +11,11 @@
 
     // TODO: Create log statements that will print each of the names array elements individually.
 
-        for (var i = 0; i < names.length; ++i) {
+        for (var i = 0; i < names.length; i++) {
             console.log(names[i]);
     }
 
-    names.forEach(function (element, index, array) {
+    names.forEach(function (element, index) {
         console.log(index, element);
     });
 })();
