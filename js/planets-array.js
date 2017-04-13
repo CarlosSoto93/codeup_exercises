@@ -64,14 +64,14 @@
     console.log("Reversing the order of the planets array.");
     // TODO: Read the console.log() statement above. Write code to perform the step it describes.
 
-    planets.reverse()
+    planets.reverse();
 
     logPlanets();
 
     console.log("Sorting the planets array.");
     // TODO: Read the console.log() statement above. Write code to perform the step it describes.
 
-    planets.sort()
+    planets.sort();
 
     logPlanets();
 })();
