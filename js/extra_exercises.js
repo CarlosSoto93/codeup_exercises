@@ -20,7 +20,7 @@
         if ( mealOfDay.length == 0){
             mealsOfDay.push(meals[random]);
         }else {
-            if (mealOfDay.indexOf(meals[random]) == meals[random]) {
+            if (mealOfDay.indexOf(meals[random]) == -1) {
                 mealOfDay.push()
             }else {
                 random = randomGen(meals);
