@@ -18,7 +18,7 @@
         var random = randomGen(meals);
 
         if ( mealOfDay.length == 0){
-            mealsOfDay.push(meals[random]);
+            mealOfDay.push(meals[random]);
         }else {
             if (mealOfDay.indexOf(meals[random]) == -1) {
                 mealOfDay.push()
