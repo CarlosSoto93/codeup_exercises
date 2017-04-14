@@ -29,10 +29,10 @@
     };
 
         person.sayHello = function() {
-        console.log("Hello from " + person.firstName + " " + person.lastName + "!");
+            return ("Hello from " + this.firstName + " " + this.lastName + "!");
     }
 
-    person.sayHello();
+    console.log(person.sayHello());
 
     /** TODO: Remember this problem from before?
      *
@@ -51,13 +51,16 @@
     var shoppers = [
         {name: 'Cameron', amount: 180},
         {name: 'Ryan', amount: 250},
-        {name: 'George', amount: 320}
+        {name: 'George', amount: 320},
+        {name: 'Carlos', amount: 213.80},
+        {name: 'Dan', amount: 400}
     ];
-    var discountValue = .35;
 
     shoppers.forEach(function(shopper) {
+        var discountValue = .35;
         var discountAmount = (shopper.amount * discountValue);
-        if (shopper.amount >= 200) {
+        var discountBreakpointDollars = 200;
+        if (shopper.amount >= discountBreakpointDollars) {
             console.log(shopper.name + ": Sub Total : " + shopper.amount.toFixed(2) + ". Discount: " + discountAmount.toFixed(2) + ". Final Total Price: " + (shopper.amount - discountAmount).toFixed(2))
         }else {
             console.log(shopper.name + ": Sub Total : " + shopper.amount.toFixed(2) + ". Final Total Price: " + (shopper.amount).toFixed(2))
@@ -66,3 +69,5 @@
 
 
 })();
+
+
