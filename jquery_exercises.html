@@ -10,9 +10,9 @@
     <h1 id="main-header">JQuery Exercises</h1>
     <p id="main-text">Testing p tag</p>
     <ul>
-        <li class="List-Items">List item one</li>
-        <li class="List-Items">List item two</li>
-        <li class="List-Items">List item three</li>
+        <li class="list-items">List item one</li>
+        <li class="list-items">List item two</li>
+        <li class="list-items">List item three</li>
     </ul>
 </div>
 
@@ -24,6 +24,11 @@
 <script>
     $(document).ready(function(){
         console.log("ready");
+
+        $('#main-header').css('color', 'red');
+        $('#main-text').css('color', 'green');
+        $('.list-items').css('color', 'blue');
+
     });
 </script>
 
