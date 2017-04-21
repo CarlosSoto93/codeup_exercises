@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Konami Code</title>
+</head>
+<body>
+<div id="wrapper">
+    <div>
+        <h1>Konami Code</h1>
+    </div>
+</div>
+<script
+        src="https://code.jquery.com/jquery-2.2.4.min.js"
+        integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+        crossorigin="anonymous"></script>
+
+<script>
+    "use strict";
+//Konami Code key codes: 38,38,40,40,37,39,37,39,66,65,13
+
+    var konamicode = [38,38,40,40,37,39,37,39,66,65,13];
+    var i = 0;
+
+    $(document).keydown(function(e) {
+        if (e.keyCode === konamicode[i]) {
+            console.log(e.keyCode);
+            i++;
+                if(e.keyCode === konamicode[10]){
+                    $('body').css('background-color', 'orange');
+                    $('div').css({
+                        background: 'red',
+                        color: 'yellow'
+                    });
+                    $("div").animate({
+                        left: '250px',
+                        opacity: '0.5',
+                        height: '150px',
+                        width: '150px'
+                    });
+                    $('#wrapper').animate({
+                        'margin-left': '45%'
+                    });
+
+                }
+        } else {
+            i = 0;
+        }
+    });
+
+
+//    var up = 38;
+//    var down = 40;
+//    var left = 37;
+//    var right = 39;
+//    var b = 66;
+//    var a = 65;
+//    var enter = 13;
+//    var code = null;
+//
+//    $(document).keyup(function(event){
+//        if (code === []) {
+//            code = code.push(event.keyCode);
+//            alert(code);
+//            if (code === [38]) {
+//                code.push(event.keyCode);
+//                alert('Code: ' + code);
+//            }
+//        }
+//    });
+
+
+
+<!---------------Find Key Code-------------->
+
+//    $(document).keyup(function(event){
+//        console.log(event.keyCode);
+//    });
+
+
+</script>
+</body>
