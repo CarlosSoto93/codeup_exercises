@@ -40,6 +40,38 @@
 
 <a href="#" id="toggle">Toggle on/off</a>
 
+
+<ul class="listOne">
+        <h3>Yellowstone National Park</h3>
+        <li>fact #1</li>
+        <li>fact #2</li>
+        <li>fact #3</li>
+        <li>fact #4</li>
+    </ul>
+<ul class="listTwo">
+        <h3>Acadia National Park</h3>
+        <li>fact #1</li>
+        <li>fact #2</li>
+        <li>fact #3</li>
+        <li>fact #4</li>
+    </ul>
+<ul class="listThree">
+        <h3>Yosemite National Park</h3>
+        <li>fact #1</li>
+        <li>fact #2</li>
+        <li>fact #3</li>
+        <li>fact #4</li>
+    </ul>
+<ul class="listFour">
+        <h3>Mount Rainier National Park</h3>
+        <li>fact #1</li>
+        <li>fact #2</li>
+        <li>fact #3</li>
+        <li>fact #4</li>
+    </ul>
+
+<button id="btn">Highlight</button>
+
 <script
         src="https://code.jquery.com/jquery-2.2.4.min.js"
         integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
@@ -49,19 +81,35 @@
     $(document).ready(function(){
         "use strict";
 
+//       toggle dd visible and invisible
         $('#toggle').click(function(){
 //            e.preventDefault();
             $('dd').toggleClass('invisible');
         });
 
+//        highlighted dd when dt are clicked
         $('.question').click(function(){
             $(this).css('background-color', '#FF0');
             e.preventDefault();
             $(this).toggleClass('question');
+        });
 
-        })
+//        highlighted last li of each ul when btn was pushed
+       $('#btn').click(function(){
+           $('ul').each(function(){
+           $(this).children().last().css('background-color', '#FF0');
+           });
+       });
 
+//       added bold to all li when any h3 was clicked
+       $('h3').click(function(){
+           $(this).parent().children().css('font-weight', 'bold');
+       });
 
+//       add blue text color to the first li of list that was clicked on
+       $('li').click(function(){
+           $(this).parent().children().first().next().css('color', 'blue');
+       })
 
     });
 </script>
