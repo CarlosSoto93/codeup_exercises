@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JQuery FAQ</title>
+    <style>
+        .invisible {
+            display: none;
+        }
+
+
+
+
+    </style>
+</head>
+<body>
+
+<dl>
+    <dt class="question">Do I have what it takes to hike Longs Peak?</dt>
+    <dd class="invisible">A successful hike up Longs Peak via the popular Keyhole Route requires a pre-sunrise start and 8.4 miles and almost 5,000 feet of climbing to a 14,259-foot summit. The first few hours stick to smooth but steep trail, then at the Boulderfield the route becomes a rocky scramble with occasional narrow sections above cliffs where a slip could kill. Wind, cold, and thin air all mount as you ascend, draining energy and warmth. If those challenges–and the grueling descent via the same trail–don’t deter you, it’s worth a try.</dd>
+    <dt class="question">When is the best time to hike Longs Peak?</dt>
+    <dd class="invisible">Critical sections of the Keyhole Route are often snow-covered until midsummer, so most climbers should aim for late July through early September. It’s wise to start your 10- to 18-hour round-trip hike around 3 a.m. so that you can reach the summit by noon and start descending before the peak’s almost-daily afternoon thunderstorms.</dd>
+    <dt class="question">What special hiking gear do I need?</dt>
+    <dd class="invisible">For strong hikers without vertigo, no special climbing equipment is necessary. However, we highly recommend a helmet, both to protect against falls on the sometimes slippery boulders and to shield against rockfall from hikers above you. And less-experienced climbers or groups with young people might want to carry harnesses and rope to belay some of the more exposed sections. In addition, pack at least four quarts of water–the Boulderfield is the last chance to fill up, and it’s not guaranteed there–plus snacks, a warm hat and gloves, raingear, and a puffy jacket for the summit.</dd>
+    <dt class="question">What are the biggest risks to hiking Longs Peak?</dt>
+    <dd class="invisible">Storms and falls cause the most injuries and fatalities on Longs. Reduce your risk of hypothermia and lightning by packing warm and waterproof clothes, by leaving early in the morning, and by turning around if dark clouds form or you see lightning in the distance.</dd>
+    <dt class="question">How can I train for the hike?</dt>
+    <dd class="invisible">The best workout for hiking is…hiking. Throw 20 pounds of gear in a daypack and head for a nearby hill (or stairclimber). Start with moderate efforts of an hour each several times a week, working up to longer, more-intense sessions with one full-day hike on the weekend. Make sure to break in the boots you plan to wear on the summit attempt–new footwear can cause trip-killing blisters if you don’t.</dd>
+    <dt class="question">Do I need a permit to hike Longs Peak?</dt>
+    <dd class="invisible">If you plan to dayhike Longs without camping overnight past the trailhead, no permit is necessary. If you’re backpacking to a backcountry site, check out the latest fees and more details at www.nps.gov/romo/planyourvisit/backcountry.htm.</dd>
+    <dt class="question">How long will it take to get to the summit of Longs Peak and back?</dt>
+    <dd class="invisible">Ultra-runners routinely make the 15-mile roundtrip in about six hours, and an acclimatized hiker who doesn’t dawdle can eke out 12 hours. Most mortals should plan on about 16 hours, though.</dd>
+    <dt class="question">Where can I camp near Longs Peak?</dt>
+    <dd class="invisible">Backpackers can reserve established backcountry campsites with outhouses at the Boulderfield (highest campground in the national parks), Battle Mountain (group site), and Goblins Forest. There is also a popular drive-up tent campground at the Longs Peak trailhead. Reserve in advance, as all sites go fast.</dd>
+    <dt class="question">Where is the Longs Peak trailhead?</dt>
+    <dd class="invisible">From Estes Park, take CO 7 south for 10 miles. Turn right toward Longs Peak Campground (marked by a big brown national park sign). At the top of the road, turn left into the trailhead park lot. Permits required for overnight parking.</dd>
+    <dt class="question">Where can I find a map and route information for Longs Peak?</dt>
+    <dd class="invisible">Our colleagues at BACKPACKER have a full trip report with photos and directions, plus interactive maps that you can print and GPS data that you can download to your phone or GPS. Go to: www.backpacker.com/trips/colorado/rocky-mountain-national-park/colorado-14ers-longs-peak-via-keyhole-route/.</dd>
+</dl>
+
+<a href="#" id="toggle">Toggle on/off</a>
+
+<script
+        src="https://code.jquery.com/jquery-2.2.4.min.js"
+        integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+        crossorigin="anonymous"></script>
+
+<script>
+    $(document).ready(function(){
+        "use strict";
+
+        $('#toggle').click(function(){
+//            e.preventDefault();
+            $('dd').toggleClass('invisible');
+        });
+
+        $('.question').click(function(){
+            $(this).css('background-color', '#FF0');
+            e.preventDefault();
+            $(this).toggleClass('question');
+
+        })
+
+
+
+    });
+</script>
+</body>
+</html>
