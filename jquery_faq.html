@@ -8,12 +8,24 @@
             display: none;
         }
 
+        ul {
+            display: none;
+        }
+
 
 
 
     </style>
 </head>
 <body>
+
+<div id="newsletter-Div">
+    <h1>Would you like to sign up for our newsletter?</h1>
+    <span id="span-X">X</span>
+</div>
+<h2 id="register">Register for the site.</h2>
+
+
 
 <dl>
     <dt class="question">Do I have what it takes to hike Longs Peak?</dt>
@@ -41,29 +53,29 @@
 <a href="#" id="toggle">Toggle on/off</a>
 
 
-<ul class="listOne">
-        <h3>Yellowstone National Park</h3>
+<h3>Yellowstone National Park</h3>
+    <ul class="listOne">
         <li>fact #1</li>
         <li>fact #2</li>
         <li>fact #3</li>
         <li>fact #4</li>
     </ul>
-<ul class="listTwo">
-        <h3>Acadia National Park</h3>
+<h3>Acadia National Park</h3>
+    <ul class="listTwo">
         <li>fact #1</li>
         <li>fact #2</li>
         <li>fact #3</li>
         <li>fact #4</li>
     </ul>
-<ul class="listThree">
-        <h3>Yosemite National Park</h3>
+<h3>Yosemite National Park</h3>
+    <ul class="listThree">
         <li>fact #1</li>
         <li>fact #2</li>
         <li>fact #3</li>
         <li>fact #4</li>
     </ul>
-<ul class="listFour">
-        <h3>Mount Rainier National Park</h3>
+<h3>Mount Rainier National Park</h3>
+    <ul class="listFour">
         <li>fact #1</li>
         <li>fact #2</li>
         <li>fact #3</li>
@@ -71,6 +83,37 @@
     </ul>
 
 <button id="btn">Highlight</button>
+
+
+<!--<================Bonus================>-->
+
+<!--Create 3 divs that look like a picture Frame, each one has a unique background image, create a button under each image that swaps the image from the frame. Use Traversing functions of jQuery.-->
+
+<!--The rules are the following:-->
+
+<!--The left frame swaps to the right and takes the image from the frame in the center.-->
+
+<!--The center frame swaps randomly one of the images left or right.-->
+
+<!--The right frame swaps to the left and takes the image from the frame in the center.-->
+
+
+<!--<div class="container">-->
+    <!--<div id="art-left" class="frame">-->
+        <!--<div class="image"></div>-->
+        <!--<button>Swap</button>-->
+    <!--</div>-->
+    <!--<div id="art-center" class="frame">-->
+        <!--<div class="image"></div>-->
+        <!--<button>Swap</button>-->
+    <!--</div>-->
+    <!--<div id="art-right" class="frame">-->
+        <!--<div class="image"></div>-->
+        <!--<button>Swap</button>-->
+    <!--</div>-->
+<!--</div>-->
+
+
 
 <script
         src="https://code.jquery.com/jquery-2.2.4.min.js"
@@ -81,35 +124,56 @@
     $(document).ready(function(){
         "use strict";
 
-//       toggle dd visible and invisible
-        $('#toggle').click(function(){
+//        Hide the first div when you click on the span
+        $('#span-X').click(function(){
+            $('#newsletter-Div').hide();
+        });
+
+//      toggle the ul when clicked on the h3 above it
+        $('h3').click(function() {
+            $(this).next().slideToggle();
+        });
+
+//      fade in an h2 after 8 seconds on page.
+        $('#register').css('display', 'none');
+        $('#register').delay(8000).fadeIn(4000);
+
+
+
+////       toggle dd visible and invisible
+//        $('#toggle').click(function(){
+////            e.preventDefault();
+//            $('dd').toggleClass('invisible');
+//        });
+//
+////        highlighted dd when dt are clicked
+//        $('.question').click(function(){
+//            $(this).css('background-color', '#FF0');
 //            e.preventDefault();
-            $('dd').toggleClass('invisible');
-        });
+//            $(this).toggleClass('question');
+//        });
+//
+////        highlighted last li of each ul when btn was pushed
+//       $('#btn').click(function(){
+//           $('ul').each(function(){
+//               $(this).children().last().css('background-color', '#FF0');
+//           });
+//       });
+//
+////       added bold to all li when any h3 was clicked
+//       $('h3').click(function(){
+//           $(this).next().css('font-weight', 'bold');
+//       });
+//
+////       add blue text color to the first li of list that was clicked on
+//       $('li').click(function(){
+//           $(this).parent().children().first().css('color', 'blue');
+//       })
 
-//        highlighted dd when dt are clicked
-        $('.question').click(function(){
-            $(this).css('background-color', '#FF0');
-            e.preventDefault();
-            $(this).toggleClass('question');
-        });
 
-//        highlighted last li of each ul when btn was pushed
-       $('#btn').click(function(){
-           $('ul').each(function(){
-           $(this).children().last().css('background-color', '#FF0');
-           });
-       });
 
-//       added bold to all li when any h3 was clicked
-       $('h3').click(function(){
-           $(this).parent().children().css('font-weight', 'bold');
-       });
+//===================Bonus=====================
 
-//       add blue text color to the first li of list that was clicked on
-       $('li').click(function(){
-           $(this).parent().children().first().next().css('color', 'blue');
-       })
 
     });
 </script>
