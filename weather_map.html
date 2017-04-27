@@ -33,12 +33,9 @@
 <div id="main-container" class="container-fluid">
     <h1>Weather Application</h1>
     <h3 id="name-of-location"></h3>
-    <div id="info-list" class="row">
-        <div id="info-0" class="col-sm-4 text-center"></div>
-        <div id="info-1" class="col-sm-4 text-center"></div>
-        <div id="info-2" class="col-sm-4 text-center"></div>
-    </div>
+    <div id="info-list" class="row"></div>
 </div>
+
 <lable>Latitude:</lable><input id="lat" type="text">
 <lable>Longitude:</lable><input id="lon" type="text">
 <button id="update">Update</button>
@@ -59,6 +56,8 @@
         "use strict";
         var location = '';
         var content = '';
+        var lat = $('#lat').val();
+        var lon = $('#lon').val();
 
         //Generate weather info for San Antonio
         function ajaxRequest() {
@@ -67,20 +66,19 @@
                 q: "San Antonio, TX",
                 units: "imperial"
             }).done(function (data) {
-                console.log(data);
-                for (var i = 0; i < data.list.length; i++) {
+//                console.log(data);
+                for (var i = 0; i < 3; i++) {
                     var iconCode = data.list[i].weather[0].icon;
                     var iconUrl = "http://openweathermap.org/img/w/" + iconCode + ".png";
-                    content = '';
                     location = '';
                     location += data.city.name;
-                    content += "<strong>" + data.list[i].temp.max + "/" + data.list[i].temp.min + "</strong><br><br>";
+                    content += "<div class='col-sm-4 text-center'><strong>" + data.list[i].temp.max + "/" + data.list[i].temp.min + "</strong><br><br>";
                     content += "<span class='icon'></span><br><br>";
                     content += "<strong>" + data.list[i].weather[0].main + ": </strong>" + data.list[i].weather[0].description + "<br><br>";
                     content += "<strong>Humidity:</strong> " + data.list[i].humidity + "<br><br>";
                     content += "<strong>Wind:</strong> " + data.list[i].speed + "<br><br>";
-                    content += "<strong>Pressure:</strong> " + data.list[i].pressure;
-                    $("#info-" + i).html(content);
+                    content += "<strong>Pressure:</strong> " + data.list[i].pressure + "</div>";
+                    $("#info-list").html(content);
                     $(".icon").html("<img src='" + iconUrl + "'>");
                 }
                 $("#name-of-location").html(location);
@@ -88,11 +86,36 @@
         }
 
         ajaxRequest();
-//
-//
-//        $('#update').click(function() {
-//            display();
-//        })
+
+
+        $('#update').click(function() {
+            console.log($('#lat').val());
+            console.log($('#lon').val());
+            $.get("http://api.openweathermap.org/data/2.5/forecast/daily", {
+                APPID: "bbcca73dfad97a24da03e3ed56c0638e",
+                lat: $('#lat').val(),
+                lon: $('#lon').val(),
+                units: "imperial"
+            }).done(function(data) {
+                console.log(data);
+                content = '';
+                for (var i = 0; i < 3; i++) {
+                    var iconCode = data.list[i].weather[0].icon;
+                    var iconUrl = "http://openweathermap.org/img/w/" + iconCode + ".png";
+                    location = '';
+                    location += data.city.name;
+                    content += "<div class='col-sm-4 text-center'><strong>" + data.list[i].temp.max + "/" + data.list[i].temp.min + "</strong><br><br>";
+                    content += "<span class='icon'></span><br><br>";
+                    content += "<strong>" + data.list[i].weather[0].main + ": </strong>" + data.list[i].weather[0].description + "<br><br>";
+                    content += "<strong>Humidity:</strong> " + data.list[i].humidity + "<br><br>";
+                    content += "<strong>Wind:</strong> " + data.list[i].speed + "<br><br>";
+                    content += "<strong>Pressure:</strong> " + data.list[i].pressure + "</div>";
+                    $("#info-list").html(content);
+                    $(".icon").html("<img src='" + iconUrl + "'>");
+                }
+                $("#name-of-location").html(location);
+            });
+        })
 
     })();
 
