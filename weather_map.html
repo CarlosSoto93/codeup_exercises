@@ -34,10 +34,12 @@
 
         #search {
             float: right;
+            margin: 10px;
         }
 
         #days-displayed {
             float: right;
+            margin: 10px;
         }
     </style>
 
@@ -50,7 +52,7 @@
         <button id="search-btn">Search</button>
     </div>
     <div id="days-displayed">
-        <input id="days-requested" type="text">
+        <input id="days-requested" type="text"  value="3" placeholder="1,2,3,4,5,6,7">
         <button id="days-btn">Show</button>
     </div>
 </div>
@@ -89,6 +91,8 @@
 
 
 //-------------Generate weather info for San Antonio-----------------------
+
+        //Ajax Request-----------------------------------------------------
         function ajaxRequest(lat, lon) {
             if (!lat || !lon){
                 lat = 29.4241;
@@ -103,10 +107,12 @@
                 generateDisplay(data)
             });
         }
+        //Generate Data to display-----------------------------------------
 
         function generateDisplay(data) {
+            var daysLength = $('#days-requested').val();
             var content = '';
-            for (var i = 0; i < 3; i++) {
+            for (var i = 0; i < daysLength; i++) {
                 var iconCode = data.list[i].weather[0].icon;
                 var iconUrl = "http://openweathermap.org/img/w/" + iconCode + ".png";
                 location = '';
@@ -138,7 +144,7 @@
 
         });
 
-        //renders weather Data
+        //renders weather Data----------------------------------------------
         ajaxRequest();
 
 //-------------------------- MAP ------------------------------
@@ -166,12 +172,8 @@
                 })
             }
 
-            //New Marker Location
-            function newMarker() {
-            }
 
-
-//--------------- Making Marker update data to display weather -------------
+//-------- Making Marker update data to display weather when dragged-------
             google.maps.event.addListener(marker, 'dragend', function() {
                 var lat = marker.position.lat();
                 var lng = marker.position.lng();
@@ -189,15 +191,10 @@
                         units: "imperial"
                     }).done(function (data) {
                         generateDisplay(data);
-                        console.log(data.city.coord.lat);
-                        console.log(data.city.coord.lon);
                         var lat = data.city.coord.lat;
                         var lng = data.city.coord.lon;
                         newLocation(lat, lng);
                         marker.setPosition(new google.maps.LatLng(lat, lng));
-                        console.log(marker.position);
-                        console.log(map.center);
-
                     });
                 }
                 searchRequest();
@@ -206,6 +203,13 @@
 
         initMap();
 
+//---------Updating Number of days Displayed--------------------------------
+        $('#days-btn').click(function() {
+            var daysLength = $('#days-requested').val();
+            ajaxRequest();
+            console.log(daysLength);
+
+        })
 
     })();
 
