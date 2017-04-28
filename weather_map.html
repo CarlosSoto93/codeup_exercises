@@ -15,7 +15,7 @@
             background-color: lightcyan;
         }
 
-        .col-xs-4 {
+        .data-display {
             border: solid gray;
             border-width: thin;
             background-color: white;
@@ -29,16 +29,34 @@
         #map-canvas {
             height: 400px;
             width: auto;
-            margin: 0px 25px 0px 25px;
+            margin: 0 25px;
+        }
+
+        #search {
+            float: right;
+        }
+
+        #days-displayed {
+            float: right;
         }
     </style>
 
 </head>
 <body>
 
+<div id="top-nav">
+    <div id="search">
+        <input id="search-request" type="text" placeholder="City">
+        <button id="search-btn">Search</button>
+    </div>
+    <div id="days-displayed">
+        <input id="days-requested" type="text">
+        <button id="days-btn">Show</button>
+    </div>
+</div>
 <div id="main-container" class="container-fluid">
     <h1>Weather Application</h1>
-    <h3 id="name-of-location"></h3>
+    <h2 id="name-of-location"></h2>
     <div id="info-list" class="row"></div>
 </div>
 <!--for updating using latitude and longitude-->
@@ -93,7 +111,7 @@
                 var iconUrl = "http://openweathermap.org/img/w/" + iconCode + ".png";
                 location = '';
                 location += data.city.name;
-                content += "<div class='col-xs-4 text-center'><h3>" + data.list[i].temp.max + "/" + data.list[i].temp.min + "</h3>";
+                content += "<div class='col-xs-4 text-center data-display'><h3>" + data.list[i].temp.max + "/" + data.list[i].temp.min + "</h3>";
                 content += "<span class='icon'></span><br>";
                 content += "<strong>" + data.list[i].weather[0].main + ": </strong>" + data.list[i].weather[0].description + "<br>";
                 content += "<strong>Humidity:</strong> " + data.list[i].humidity + "<br>";
@@ -105,7 +123,7 @@
             $(".icon").html("<img src='" + iconUrl + "'>");
         }
 
-//---------------Update using Latitude and longitude--------------------
+//---------------Update using Latitude and longitude inputs----------------
         $('#update').click(function() {
             var lat = $('#lat').val();
             var lon = $('#lon').val();
@@ -115,55 +133,79 @@
                 lon: lon,
                 units: "imperial"
             }).done(function (data) {
-                generateDisplay(data)
+                generateDisplay(data);
             });
-            google.maps(function() {
-                map.setCenter({
-                    lat: lat,
-                    lng: lon
-                });
-            })
+
         });
 
         //renders weather Data
         ajaxRequest();
 
-//------------------ MAP ------------------------------
-
+//-------------------------- MAP ------------------------------
         function initMap(){
 
-            var myLatLng = {lat: 29.4241, lng: -98.4936};
-
-            var mapOptions = {
-                zoom: 10,
-                center: myLatLng
-            };
-
             // Render the map
-            var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+            var map = new google.maps.Map(document.getElementById("map-canvas"), {
+                center: new google.maps.LatLng(29.4241, -98.4936),
+                zoom: 10
+            });
 
             //Marker
             var marker = new google.maps.Marker({
-                position: myLatLng,
+                position: map.center,
                 map: map,
                 draggable: true,
                 id: marker
             });
 
+            //New map center Location
+            function newLocation(newLat, newLng) {
+                map.setCenter({
+                    lat: newLat,
+                    lng: newLng
+                })
+            }
+
+            //New Marker Location
+            function newMarker() {
+            }
+
+
+//--------------- Making Marker update data to display weather -------------
             google.maps.event.addListener(marker, 'dragend', function() {
                 var lat = marker.position.lat();
                 var lng = marker.position.lng();
-                map.setCenter({
-                    lat: lat,
-                    lng: lng
-                });
+                newLocation(lat, lng);
                 ajaxRequest(lat, lng)
-
             });
 
+//---------------Updating location display from Search---------------------
+            $('#search-btn').click(function() {
+                function searchRequest() {
+                    var q = $('#search-request').val();
+                    $.get("http://api.openweathermap.org/data/2.5/forecast/daily", {
+                        APPID: "bbcca73dfad97a24da03e3ed56c0638e",
+                        q: q,
+                        units: "imperial"
+                    }).done(function (data) {
+                        generateDisplay(data);
+                        console.log(data.city.coord.lat);
+                        console.log(data.city.coord.lon);
+                        var lat = data.city.coord.lat;
+                        var lng = data.city.coord.lon;
+                        newLocation(lat, lng);
+                        marker.setPosition(new google.maps.LatLng(lat, lng));
+                        console.log(marker.position);
+                        console.log(map.center);
+
+                    });
+                }
+                searchRequest();
+            });
         }
 
-        initMap()
+        initMap();
+
 
     })();
 
