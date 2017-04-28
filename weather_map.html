@@ -68,63 +68,62 @@
     (function() {
         "use strict";
         var location = '';
-        var content = '';
+
 
 //-------------Generate weather info for San Antonio-----------------------
-        function ajaxRequest() {
+        function ajaxRequest(lat, lon) {
+            if (!lat || !lon){
+                lat = 29.4241;
+                lon = -98.4936;
+            }
             $.get("http://api.openweathermap.org/data/2.5/forecast/daily", {
                 APPID: "bbcca73dfad97a24da03e3ed56c0638e",
-                lat: "29.4241",
-                lon: "-98.4936",
+                lat: lat,
+                lon: lon,
                 units: "imperial"
             }).done(function (data) {
-                for (var i = 0; i < 3; i++) {
-                    var iconCode = data.list[i].weather[0].icon;
-                    var iconUrl = "http://openweathermap.org/img/w/" + iconCode + ".png";
-                    location = '';
-                    location += data.city.name;
-                    content += "<div class='col-xs-4 text-center'><strong>" + data.list[i].temp.max + "/" + data.list[i].temp.min + "</strong><br>";
-                    content += "<span class='icon'></span><br>";
-                    content += "<strong>" + data.list[i].weather[0].main + ": </strong>" + data.list[i].weather[0].description + "<br>";
-                    content += "<strong>Humidity:</strong> " + data.list[i].humidity + "<br>";
-                    content += "<strong>Wind:</strong> " + data.list[i].speed + "<br>";
-                    content += "<strong>Pressure:</strong> " + data.list[i].pressure + "</div>";
-                    $("#info-list").html(content);
-                    $(".icon").html("<img src='" + iconUrl + "'>");
-                }
-                $("#name-of-location").html(location);
+                generateDisplay(data)
             });
         }
 
+        function generateDisplay(data) {
+            var content = '';
+            for (var i = 0; i < 3; i++) {
+                var iconCode = data.list[i].weather[0].icon;
+                var iconUrl = "http://openweathermap.org/img/w/" + iconCode + ".png";
+                location = '';
+                location += data.city.name;
+                content += "<div class='col-xs-4 text-center'><h3>" + data.list[i].temp.max + "/" + data.list[i].temp.min + "</h3>";
+                content += "<span class='icon'></span><br>";
+                content += "<strong>" + data.list[i].weather[0].main + ": </strong>" + data.list[i].weather[0].description + "<br>";
+                content += "<strong>Humidity:</strong> " + data.list[i].humidity + "<br>";
+                content += "<strong>Wind:</strong> " + data.list[i].speed + "<br>";
+                content += "<strong>Pressure:</strong> " + data.list[i].pressure + "</div>";
+            }
+            $("#name-of-location").html(location);
+            $("#info-list").html(content);
+            $(".icon").html("<img src='" + iconUrl + "'>");
+        }
 
 //---------------Update using Latitude and longitude--------------------
-//        $('#update').click(function() {
-//            var lat = $('#lat').val();
-//            var lon = $('#lon').val();
-//            content = '';
-//            $.get("http://api.openweathermap.org/data/2.5/forecast/daily", {
-//                APPID: "bbcca73dfad97a24da03e3ed56c0638e",
-//                lat: lat,
-//                lon: lon,
-//                units: "imperial"
-//            }).done(function (data) {
-//                for (var i = 0; i < 3; i++) {
-//                    var iconCode = data.list[i].weather[0].icon;
-//                    var iconUrl = "http://openweathermap.org/img/w/" + iconCode + ".png";
-//                    location = '';
-//                    location += data.city.name;
-//                    content += "<div class='col-xs-4 text-center'><strong>" + data.list[i].temp.max + "/" + data.list[i].temp.min + "</strong><br><br>";
-//                    content += "<span class='icon'></span><br><br>";
-//                    content += "<strong>" + data.list[i].weather[0].main + ": </strong>" + data.list[i].weather[0].description + "<br><br>";
-//                    content += "<strong>Humidity:</strong> " + data.list[i].humidity + "<br><br>";
-//                    content += "<strong>Wind:</strong> " + data.list[i].speed + "<br><br>";
-//                    content += "<strong>Pressure:</strong> " + data.list[i].pressure + "</div>";
-//                    $("#info-list").html(content);
-//                    $(".icon").html("<img src='" + iconUrl + "'>");
-//                }
-//                $("#name-of-location").html(location);
-//            });
-//        });
+        $('#update').click(function() {
+            var lat = $('#lat').val();
+            var lon = $('#lon').val();
+            $.get("http://api.openweathermap.org/data/2.5/forecast/daily", {
+                APPID: "bbcca73dfad97a24da03e3ed56c0638e",
+                lat: lat,
+                lon: lon,
+                units: "imperial"
+            }).done(function (data) {
+                generateDisplay(data)
+            });
+            google.maps(function() {
+                map.setCenter({
+                    lat: lat,
+                    lng: lon
+                });
+            })
+        });
 
         //renders weather Data
         ajaxRequest();
@@ -147,8 +146,20 @@
             var marker = new google.maps.Marker({
                 position: myLatLng,
                 map: map,
-                draggable: true
-            })
+                draggable: true,
+                id: marker
+            });
+
+            google.maps.event.addListener(marker, 'dragend', function() {
+                var lat = marker.position.lat();
+                var lng = marker.position.lng();
+                map.setCenter({
+                    lat: lat,
+                    lng: lng
+                });
+                ajaxRequest(lat, lng)
+
+            });
 
         }
 
